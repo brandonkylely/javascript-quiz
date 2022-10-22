@@ -39,17 +39,19 @@ var questions = [
             correct: false   
             },
         ]
-    },        
+    },         
 ]
-// set functions for query selection and create element
-// function el(element) {
-//     document.createElement(element);
-// };
-// function qs(element) {
-//     document.querySelector(element);
-// }
 
-// create homepage
+function checkAnswer(event) {
+    if (event === true) {
+        right++;
+        question;
+    } else {
+        wrong ++;
+        question;
+    }
+}
+
 function homePage() {    
     quiz.innerHTML =`
     <p>
@@ -71,15 +73,18 @@ function question() {
         ${questions[page].ask}
     <p>
 
-    <button>${questions[page].answers[0].answer}</button>
-    <button>${questions[page].answers[1].answer}</button>
-    <button>${questions[page].answers[2].answer}</button>
+    <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
+    <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
+    <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
     `
+
     for (i=0; i < 3; i++) {
-    var button = document.querySelectorAll("button")
-    button[i].addEventListener("click", question);
+    var button = document.querySelectorAll("button");
+    button[i].addEventListener("click", checkAnswer(data));
     }
+    console.log(right + " right " + wrong + " wrong.")
 }
+
 
 
 
