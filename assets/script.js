@@ -1,11 +1,13 @@
 // set variables
 var quiz = document.querySelector("#quiz");
-// var time = 0;
-// var gameRunning = false;
+var timer = document.querySelector("#timer");
+var time = 100;
+// var endTime = 0;
+var gameRunning = false;
 var right = 0;
 var wrong = 0;
 var page=-1;
-var players {}
+var players = {}
 var questions = [
     {
         ask: "First Question", 
@@ -46,11 +48,17 @@ var questions = [
 function checkAnswer(event) {
     if (event === true) {
         right++;
+        console.log(right + " right " + wrong + " wrong.")
         question;
     } else {
         wrong ++;
+        console.log(right + " right " + wrong + " wrong.")
         question;
     }
+}
+
+function gameStart() {
+    gameRunning = true;
 }
 
 function homePage() {    
@@ -63,11 +71,19 @@ function homePage() {
     `
 
     document.querySelector("button")
-    .addEventListener("click", question)
+    .addEventListener("click", question);
+
+    document.querySelector("button")
+    .addEventListener("click", gameStart)
+
+    document.querySelector("button")
+    .addEventListener("click", startTimer)
 }
 
 // need to change content of homepage, not just add to it
 function question() {
+    // gameStart()
+    // startTimer()
     page++;
     if (!!questions[page]) {
         quiz.innerHTML =`
@@ -75,22 +91,53 @@ function question() {
             ${questions[page].ask}
         <p>
 
-        <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
-        <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
-        <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
+        <button data=true}">${questions[page].answers[0].answer}</button>
+        <button data=false>${questions[page].answers[1].answer}</button>
+        <button data=false>${questions[page].answers[2].answer}</button>
         `
+        // <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
+        // <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
+        // <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
 
-        for (i=0; i < 3; i++) {
-        var button = document.querySelectorAll("button");
+        // for (i=0; i < 3; i++) {
+        // var button = document.querySelectorAll("button");
         // button[i].addEventListener("click", checkAnswer(data));
-        button[i].addEventListener("click", question);
-        }
+        // button[i].addEventListener("click", question);
+        // }
 
-        console.log(right + " right " + wrong + " wrong.")
+        var button = document.querySelectorAll("button");
+        var data = button[0].getAttribute("data");
+        button[0].addEventListener("click", function() { checkAnswer(data)});
+        button[0].addEventListener("click", question);
+        button[1].addEventListener("click", function() { checkAnswer(data)});
+        button[1].addEventListener("click", question);
+        button[2].addEventListener("click", function() { checkAnswer(data)});
+        button[2].addEventListener("click", question);
+
     } else {
         gameOver();
     }
+
 }
+
+function startTimer() {
+    var timerInterval = setInterval(function() {
+      time--;
+      timer.textContent = time
+  
+      if(time === 0) {
+        clearInterval(timerInterval);
+        gameOver();
+      }
+
+      if(!gameRunning) {
+        // endTime = time;
+        clearInterval(timerInterval);
+        gameOver();
+      }
+  
+    }, 1000);
+  }
 
 function gameOver() {
     quiz.innerHTML =`
@@ -105,17 +152,21 @@ function gameOver() {
         <input id=submit type="submit">
         </form>
         `
-        var submit = document.querySelector("#submit")
+        gameRunning = false;
+
+        // timer.textContent = endTime;
+        var submit = document.querySelector("#submit");
         // preventDefault isnt working
-        submit.preventDefault()
+        // submit.preventDefault();
 
         // add score to var userScores
+        // var initials = 
+        // var score = right * 100
+        // localStorage.setItem(initials, JSON.parse());
+        // localStorage.setItem(score, JSON.parse());
 
-        // localStorage.setItem(initials, JSON.parse())
-        // localStorage.setItem(score, JSON.parse())
-
-        document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong."
-        submit.addEventListener("click", scoreboard)
+        document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong.";
+        submit.addEventListener("click", scoreboard);
 }
 
 function scoreboard() {
@@ -126,8 +177,8 @@ function scoreboard() {
 
         <ul id=scores><ul>
         `
-        localStorage.getItem(initials, JSON.stringify)
-        localStorage.getItem(score, JSON.stringify)
+        // localStorage.getItem(initials, JSON.stringify);
+        // localStorage.getItem(score, JSON.stringify);
 }
 
 // use function to switch to next question
