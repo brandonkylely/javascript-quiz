@@ -7,7 +7,10 @@ var gameRunning = false;
 var right = 0;
 var wrong = 0;
 var page=-1;
-var players = {}
+var players = {
+    initials: "",
+    score: "",
+}
 var questions = [
     {
         ask: "First Question", 
@@ -59,65 +62,7 @@ function checkAnswer(event) {
 
 function gameStart() {
     gameRunning = true;
-}
-
-function homePage() {    
-    quiz.innerHTML =`
-    <p>
-    "Welcome to the quiz!"
-    <p>
-
-    <button> Start Quiz </button>
-    `
-
-    document.querySelector("button")
-    .addEventListener("click", question);
-
-    document.querySelector("button")
-    .addEventListener("click", gameStart)
-
-    document.querySelector("button")
-    .addEventListener("click", startTimer)
-}
-
-// need to change content of homepage, not just add to it
-function question() {
-    // gameStart()
-    // startTimer()
-    page++;
-    if (!!questions[page]) {
-        quiz.innerHTML =`
-        <p>
-            ${questions[page].ask}
-        <p>
-
-        <button data=true}">${questions[page].answers[0].answer}</button>
-        <button data=false>${questions[page].answers[1].answer}</button>
-        <button data=false>${questions[page].answers[2].answer}</button>
-        `
-        // <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
-        // <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
-        // <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
-
-        // for (i=0; i < 3; i++) {
-        // var button = document.querySelectorAll("button");
-        // button[i].addEventListener("click", checkAnswer(data));
-        // button[i].addEventListener("click", question);
-        // }
-
-        var button = document.querySelectorAll("button");
-        var data = button[0].getAttribute("data");
-        button[0].addEventListener("click", function() { checkAnswer(data)});
-        button[0].addEventListener("click", question);
-        button[1].addEventListener("click", function() { checkAnswer(data)});
-        button[1].addEventListener("click", question);
-        button[2].addEventListener("click", function() { checkAnswer(data)});
-        button[2].addEventListener("click", question);
-
-    } else {
-        gameOver();
-    }
-
+    startTimer();
 }
 
 function startTimer() {
@@ -139,6 +84,60 @@ function startTimer() {
     }, 1000);
   }
 
+function homePage() {    
+    quiz.innerHTML =`
+    <p>
+    "Welcome to the quiz!"
+    <p>
+
+    <button> Start Quiz </button>
+    `
+
+    document.querySelector("button")
+    .addEventListener("click", question);
+
+    document.querySelector("button")
+    .addEventListener("click", gameStart)
+}
+
+// need to change content of homepage, not just add to it
+function question() {
+    page++;
+    if (!!questions[page]) {
+        quiz.innerHTML =`
+        <p>
+            ${questions[page].ask}
+        <p>
+
+        <button data=true}">${questions[page].answers[0].answer}</button>
+        <button data=false>${questions[page].answers[1].answer}</button>
+        <button data=false>${questions[page].answers[2].answer}</button>
+        `
+        // <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
+        // <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
+        // <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
+
+        for (i=0; i < 3; i++) {
+        var button = document.querySelectorAll("button");
+        button[i].addEventListener("click", checkAnswer);
+        button[i].addEventListener("click", question);
+        }
+
+        // var button = document.querySelectorAll("button");
+        // var data = button[0].getAttribute("data");
+        // button[0].addEventListener("click", function() { checkAnswer(data)});
+        // button[0].addEventListener("click", question);
+        // button[1].addEventListener("click", function() { checkAnswer(data)});
+        // button[1].addEventListener("click", question);
+        // button[2].addEventListener("click", function() { checkAnswer(data)});
+        // button[2].addEventListener("click", question);
+
+    } else {
+        gameOver();
+    }
+
+}
+
 function gameOver() {
     quiz.innerHTML =`
         <p>
@@ -155,15 +154,15 @@ function gameOver() {
         gameRunning = false;
 
         // timer.textContent = endTime;
-        var submit = document.querySelector("#submit");
+        var submit = document.querySelector("#submit").value;
         // preventDefault isnt working
         // submit.preventDefault();
 
         // add score to var userScores
         // var initials = 
         // var score = right * 100
-        // localStorage.setItem(initials, JSON.parse());
-        // localStorage.setItem(score, JSON.parse());
+        localStorage.setItem("name", JSON.parse(submit));
+        // localStorage.setItem("score", JSON.parse());
 
         document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong.";
         submit.addEventListener("click", scoreboard);
@@ -177,7 +176,8 @@ function scoreboard() {
 
         <ul id=scores><ul>
         `
-        // localStorage.getItem(initials, JSON.stringify);
+        time = "";
+        // localStorage.getItem("name", JSON.stringify(players));
         // localStorage.getItem(score, JSON.stringify);
 }
 
