@@ -68,24 +68,40 @@ function homePage() {
 // need to change content of homepage, not just add to it
 function question() {
     page++;
-    quiz.innerHTML =`
-    <p>
-        ${questions[page].ask}
-    <p>
+    if (!!questions[page]) {
+        quiz.innerHTML =`
+        <p>
+            ${questions[page].ask}
+        <p>
 
-    <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
-    <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
-    <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
-    `
+        <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
+        <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
+        <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
+        `
 
-    for (i=0; i < 3; i++) {
-    var button = document.querySelectorAll("button");
-    button[i].addEventListener("click", checkAnswer(data));
+        for (i=0; i < 3; i++) {
+        var button = document.querySelectorAll("button");
+        // button[i].addEventListener("click", checkAnswer(data));
+        button[i].addEventListener("click", question);
+        }
+
+        console.log(right + " right " + wrong + " wrong.")
+    } else {
+        gameOver();
     }
-    console.log(right + " right " + wrong + " wrong.")
 }
 
+function gameOver() {
+    quiz.innerHTML =`
+        <p>
+            Game over, thanks for playing!
+        <p>
 
+        <p id=score><p>
+        `
+
+        document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong."
+}
 
 
 
