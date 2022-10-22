@@ -15,14 +15,19 @@ function home() {
     var homepage = document.createElement("p")
     document.body.appendChild(homepage);
     homepage.textContent = "Welcome to the quiz!";
+
     var startQ = document.createElement("button");
     document.body.appendChild(startQ);
     startQ.textContent = "Start Quiz";
-    startQ.addEventListener("click", question1())
+
+    startQ.addEventListener("click", question1)
 }
 
+// need to change content of homepage, not just add to it
 function question1() {
-
+    var ask1 = document.createElement("p")
+    document.body.appendChild(ask1);
+    ask1.textContent = "first question";
 }
 
 
