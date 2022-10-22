@@ -5,6 +5,7 @@ var quiz = document.querySelector("#quiz");
 var right = 0;
 var wrong = 0;
 var page=-1;
+var players {}
 var questions = [
     {
         ask: "First Question", 
@@ -98,18 +99,41 @@ function gameOver() {
         <p>
 
         <p id=score><p>
+        <form> 
+        Your Initials: <input type="text" name="initials"> 
+        <br>
+        <input id=submit type="submit">
+        </form>
         `
+        var submit = document.querySelector("#submit")
+        // preventDefault isnt working
+        submit.preventDefault()
+
+        // add score to var userScores
+
+        // localStorage.setItem(initials, JSON.parse())
+        // localStorage.setItem(score, JSON.parse())
 
         document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong."
+        submit.addEventListener("click", scoreboard)
 }
 
+function scoreboard() {
+    quiz.innerHTML =`
+        <p>
+            Here are the scores!
+        <p>
 
+        <ul id=scores><ul>
+        `
+        localStorage.getItem(initials, JSON.stringify)
+        localStorage.getItem(score, JSON.stringify)
+}
 
 // use function to switch to next question
 // use key value pairs to store answers and true/false-ness
 // use setInterval to time
 // use if time=0 to end game
-// use gamerunning variable with boolean value
 // use local storage to set leaderboard
 
 homePage()
