@@ -1,6 +1,7 @@
 // set variables
 var time = 0;
 var gameRunning = false;
+var quiz = document.querySelector("#quiz");
 
 // set functions for query selection and create element
 // function el(element) {
@@ -12,23 +13,47 @@ var gameRunning = false;
 
 // create homepage
 function home() {    
-    var homepage = document.createElement("p")
-    document.body.appendChild(homepage);
-    homepage.textContent = "Welcome to the quiz!";
+    quiz.innerHTML =`
+    <p>
+    "Welcome to the quiz!"
+    <p>
 
-    var startQ = document.createElement("button");
-    document.body.appendChild(startQ);
-    startQ.textContent = "Start Quiz";
-
-    startQ.addEventListener("click", question1)
+    <button> Start Quiz </button>
+    `
+    document.querySelector("button")
+    .addEventListener("click", question1)
 }
 
 // need to change content of homepage, not just add to it
 function question1() {
-    var ask1 = document.createElement("p")
-    document.body.appendChild(ask1);
-    ask1.textContent = "first question";
+    quiz.innerHTML =`
+    <p>
+    "First Question"
+    <p>
+
+    <button id="answer1"> 1 </button>
+    <button id="answer2"> 2 </button>
+    <button id="answer3"> 3 </button>
+    `
+
+    document.querySelector("button")
+    .addEventListener("click", question2)
 }
+
+function question2() {
+    quiz.innerHTML =`
+    <p>
+    "Second Question"
+    <p>
+
+    <button id="answer1"> 1 </button>
+    <button id="answer2"> 2 </button>
+    <button id="answer3"> 3 </button>
+    `
+    document.querySelector("button")
+    .addEventListener("click", question3)
+}
+
 
 
 // use function to switch to next question
