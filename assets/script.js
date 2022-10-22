@@ -108,10 +108,11 @@ function question() {
         <p>
             ${questions[page].ask}
         <p>
-
-        <button data=true}">${questions[page].answers[0].answer}</button>
-        <button data=false>${questions[page].answers[1].answer}</button>
-        <button data=false>${questions[page].answers[2].answer}</button>
+        <ul>
+            <li><button data=true}">${questions[page].answers[0].answer}</button></li>
+            <li><button data=false>${questions[page].answers[1].answer}</button></li>
+            <li><button data=false>${questions[page].answers[2].answer}</button></li>
+        <ul>
         `
         // <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
         // <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
