@@ -1,5 +1,6 @@
 // set variables
 var quiz = document.querySelector("#quiz");
+var validation = document.querySelector("#validation");
 var timer = document.querySelector("#timer");
 var time = 1000;
 // var endTime = 0;
@@ -7,7 +8,7 @@ var gameRunning = false;
 var right = 0;
 var wrong = 0;
 var page=-1;
-var players = {
+var userScores = {
     initials: "",
     score: "",
 }
@@ -20,7 +21,7 @@ var questions = [
              correct: false   
             },
             {
-            answer: "2",
+            answer: "correct",
             correct: true   
             },
             {
@@ -33,7 +34,7 @@ var questions = [
         ask: "Second Question", 
         answers: [
             {
-             answer: "1",
+             answer: "correct",
              correct: true   
             },
             {
@@ -117,7 +118,7 @@ function questionPage() {
         // <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
         // <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
         // <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
-        console.log(questions[page].answers[1].correct)
+        // console.log(questions[page].answers[1].correct)
 
         for (i=0; i < questions[page].answers.length; i++) {
             var button = document.querySelectorAll("button");
@@ -125,10 +126,12 @@ function questionPage() {
                 if (event.currentTarget.dataset.correct === "true") {
                     right++;
                     console.log(right + " right " + wrong + " wrong.")
+                    validation.textContent = "Correct"
                     questionPage;
                 } else {
                     wrong++;
                     console.log(right + " right " + wrong + " wrong.")
+                    validation.textContent = "Incorrect"
                     questionPage;
                 }
             });
@@ -164,21 +167,27 @@ function gameOver() {
         <input id=submit type="submit">
         </form>
         `
+        validation.textContent = "";
         gameRunning = false;
 
-        // timer.textContent = endTime;
-        var submit = document.querySelector("#submit").value;
-        // preventDefault isnt working
-        // submit.preventDefault();
+        var submit = document.querySelector("#submit");
+        // preventDefault needed?
 
         // add score to var userScores
         // var initials = 
         // var score = right * 100
-        // localStorage.setItem("name", JSON.parse(submit));
+
         // localStorage.setItem("score", JSON.parse());
 
         document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong.";
         submit.addEventListener("click", scoreboard);
+        // submit.addEventListener("click", function() {
+        //         userScores.initials.push(submit.value);
+        //         userScores.score.push(right.value);
+        //         localStorage.setItem("userScores", JSON.parse(userScores));
+        //         scoreboard();
+        //     }
+        // );
 }
 
 function scoreboard() {
@@ -190,13 +199,11 @@ function scoreboard() {
         <ul id=scores><ul>
         `
         time = "";
+        localStorage.setItem("userScores", JSON.stringify(userScores));
+        
         // localStorage.getItem("name", JSON.stringify(players));
         // localStorage.getItem(score, JSON.stringify);
 }
-
-// use function to switch to next question
-// use key value pairs to store answers and true/false-ness
-// use setInterval to time
 // use if time=0 to end game
 // use local storage to set leaderboard
 
