@@ -1,8 +1,46 @@
 // set variables
-var time = 0;
-var gameRunning = false;
 var quiz = document.querySelector("#quiz");
-
+// var time = 0;
+// var gameRunning = false;
+var right = 0;
+var wrong = 0;
+var page=-1;
+var questions = [
+    {
+        ask: "First Question", 
+        answers: [
+            {
+             answer: "1",
+             correct: false   
+            },
+            {
+            answer: "2",
+            correct: true   
+            },
+            {
+            answer: "3",
+            correct: false   
+            },
+        ]
+    },
+    {
+        ask: "Second Question", 
+        answers: [
+            {
+             answer: "1",
+             correct: true   
+            },
+            {
+            answer: "2",
+            correct: false   
+            },
+            {
+            answer: "3",
+            correct: false   
+            },
+        ]
+    },        
+]
 // set functions for query selection and create element
 // function el(element) {
 //     document.createElement(element);
@@ -12,7 +50,7 @@ var quiz = document.querySelector("#quiz");
 // }
 
 // create homepage
-function home() {    
+function homePage() {    
     quiz.innerHTML =`
     <p>
     "Welcome to the quiz!"
@@ -20,39 +58,29 @@ function home() {
 
     <button> Start Quiz </button>
     `
+
     document.querySelector("button")
-    .addEventListener("click", question1)
+    .addEventListener("click", question)
 }
 
 // need to change content of homepage, not just add to it
-function question1() {
+function question() {
+    page++;
     quiz.innerHTML =`
     <p>
-    "First Question"
+        ${questions[page].ask}
     <p>
 
-    <button id="answer1"> 1 </button>
-    <button id="answer2"> 2 </button>
-    <button id="answer3"> 3 </button>
+    <button>${questions[page].answers[0].answer}</button>
+    <button>${questions[page].answers[1].answer}</button>
+    <button>${questions[page].answers[2].answer}</button>
     `
-
-    document.querySelector("button")
-    .addEventListener("click", question2)
+    for (i=0; i < 3; i++) {
+    var button = document.querySelectorAll("button")
+    button[i].addEventListener("click", question);
+    }
 }
 
-function question2() {
-    quiz.innerHTML =`
-    <p>
-    "Second Question"
-    <p>
-
-    <button id="answer1"> 1 </button>
-    <button id="answer2"> 2 </button>
-    <button id="answer3"> 3 </button>
-    `
-    document.querySelector("button")
-    .addEventListener("click", question3)
-}
 
 
 
@@ -63,4 +91,4 @@ function question2() {
 // use gamerunning variable with boolean value
 // use local storage to set leaderboard
 
-home()
+homePage()
