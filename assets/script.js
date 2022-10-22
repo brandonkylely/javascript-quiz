@@ -1,7 +1,7 @@
 // set variables
 var quiz = document.querySelector("#quiz");
 var timer = document.querySelector("#timer");
-var time = 100;
+var time = 1000;
 // var endTime = 0;
 var gameRunning = false;
 var right = 0;
@@ -48,17 +48,17 @@ var questions = [
     },         
 ]
 
-function checkAnswer(event) {
-    if (event === true) {
-        right++;
-        console.log(right + " right " + wrong + " wrong.")
-        question;
-    } else {
-        wrong ++;
-        console.log(right + " right " + wrong + " wrong.")
-        question;
-    }
-}
+// function checkAnswer(event) {
+//     if (event.currentTarget.dataset.correct === true) {
+//         right++;
+//         console.log(right + " right " + wrong + " wrong.")
+//         questionPage;
+//     } else {
+//         wrong ++;
+//         console.log(right + " right " + wrong + " wrong.")
+//         questionPage;
+//     }
+// }
 
 function gameStart() {
     gameRunning = true;
@@ -94,14 +94,14 @@ function homePage() {
     `
 
     document.querySelector("button")
-    .addEventListener("click", question);
+    .addEventListener("click", questionPage);
 
     document.querySelector("button")
     .addEventListener("click", gameStart)
 }
 
 // need to change content of homepage, not just add to it
-function question() {
+function questionPage() {
     page++;
     if (!!questions[page]) {
         quiz.innerHTML =`
@@ -109,20 +109,32 @@ function question() {
             ${questions[page].ask}
         <p>
         <ul>
-            <li><button data=true}">${questions[page].answers[0].answer}</button></li>
-            <li><button data=false>${questions[page].answers[1].answer}</button></li>
-            <li><button data=false>${questions[page].answers[2].answer}</button></li>
+            <li><button data-correct="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button></li>
+            <li><button data-correct="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button></li>
+            <li><button data-correct="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button></li>
         <ul>
         `
         // <button data="${questions[page].answers[0].correct}">${questions[page].answers[0].answer}</button>
         // <button data="${questions[page].answers[1].correct}">${questions[page].answers[1].answer}</button>
         // <button data="${questions[page].answers[2].correct}">${questions[page].answers[2].answer}</button>
+        console.log(questions[page].answers[1].correct)
 
-        for (i=0; i < 3; i++) {
-        var button = document.querySelectorAll("button");
-        button[i].addEventListener("click", checkAnswer);
-        button[i].addEventListener("click", question);
+        for (i=0; i < questions[page].answers.length; i++) {
+            var button = document.querySelectorAll("button");
+            button[i].addEventListener("click", function(event) {
+                if (event.currentTarget.dataset.correct === "true") {
+                    right++;
+                    console.log(right + " right " + wrong + " wrong.")
+                    questionPage;
+                } else {
+                    wrong++;
+                    console.log(right + " right " + wrong + " wrong.")
+                    questionPage;
+                }
+            });
+            button[i].addEventListener("click", questionPage);
         }
+        // console.log(questions[page].answers.length)
 
         // var button = document.querySelectorAll("button");
         // var data = button[0].getAttribute("data");
@@ -162,7 +174,7 @@ function gameOver() {
         // add score to var userScores
         // var initials = 
         // var score = right * 100
-        localStorage.setItem("name", JSON.parse(submit));
+        // localStorage.setItem("name", JSON.parse(submit));
         // localStorage.setItem("score", JSON.parse());
 
         document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong.";
