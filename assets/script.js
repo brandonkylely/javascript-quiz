@@ -8,9 +8,8 @@ var gameRunning = false;
 var right = 0;
 var wrong = 0;
 var page=-1;
-var submit = document.querySelector("#submit");
 var userScores = [];
-var user = {};
+var user = [];
 var questions = [
     {
         ask: "First Question", 
@@ -45,7 +44,24 @@ var questions = [
             correct: false   
             },
         ]
-    },         
+    },
+    {
+        ask: "third Question", 
+        answers: [
+            {
+             answer: "1",
+             correct: false   
+            },
+            {
+            answer: "2",
+            correct: false   
+            },
+            {
+            answer: "correct",
+            correct: true  
+            },
+        ]
+    },           
 ];
 
 // function checkAnswer(event) {
@@ -126,12 +142,10 @@ function questionPage() {
                     right++;
                     console.log(right + " right " + wrong + " wrong.")
                     validation.textContent = "Correct"
-                    questionPage;
                 } else {
                     wrong++;
                     console.log(right + " right " + wrong + " wrong.")
                     validation.textContent = "Incorrect"
-                    questionPage;
                 }
             });
             button[i].addEventListener("click", questionPage);
@@ -166,14 +180,19 @@ function gameOver() {
         <input id=submit type="submit">
         </form>
         `
+        // var user = [];
+        // var userScores = [];
         validation.textContent = "";
         gameRunning = false;
         user.push(right);
+
+        console.log(user);
+
         userScores.concat(user);
-        localStorage.setItem("userScores", JSON.parse(userScores));
+        // localStorage.setItem("userScores", JSON.stringify(userScores));
 
         // localStorage.setItem("score", JSON.parse());
-
+        var submit = document.querySelector("#submit");
         document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong.";
         submit.addEventListener("click", scoreboard);
         // submit.addEventListener("click", function() {
@@ -184,8 +203,6 @@ function gameOver() {
         //         scoreboard();
         //     }
         // );
-        right = 0;
-        wrong = 0;
 }
 
 function scoreboard() {
@@ -203,7 +220,6 @@ function scoreboard() {
             list[i].textContent = userScores[i];
             scoreList.appendChild(list[i]);
         };
-
         time = "";
         // localStorage.setItem("userScores", JSON.stringify(userScores));
         
