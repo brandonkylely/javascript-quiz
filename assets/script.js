@@ -8,10 +8,9 @@ var gameRunning = false;
 var right = 0;
 var wrong = 0;
 var page=-1;
-var userScores = {
-    initials: "",
-    score: "",
-}
+var submit = document.querySelector("#submit");
+var userScores = [];
+var user = {};
 var questions = [
     {
         ask: "First Question", 
@@ -47,7 +46,7 @@ var questions = [
             },
         ]
     },         
-]
+];
 
 // function checkAnswer(event) {
 //     if (event.currentTarget.dataset.correct === true) {
@@ -169,13 +168,9 @@ function gameOver() {
         `
         validation.textContent = "";
         gameRunning = false;
-
-        var submit = document.querySelector("#submit");
-        // preventDefault needed?
-
-        // add score to var userScores
-        // var initials = 
-        // var score = right * 100
+        user.push(right);
+        userScores.concat(user);
+        localStorage.setItem("userScores", JSON.parse(userScores));
 
         // localStorage.setItem("score", JSON.parse());
 
@@ -183,11 +178,14 @@ function gameOver() {
         submit.addEventListener("click", scoreboard);
         // submit.addEventListener("click", function() {
         //         userScores.initials.push(submit.value);
-        //         userScores.score.push(right.value);
+        //         userScores.score.push(right);
         //         localStorage.setItem("userScores", JSON.parse(userScores));
+        //         console.log(submit.value);
         //         scoreboard();
         //     }
         // );
+        right = 0;
+        wrong = 0;
 }
 
 function scoreboard() {
@@ -198,8 +196,16 @@ function scoreboard() {
 
         <ul id=scores><ul>
         `
+        var scoreList = document.querySelector("#scores");
+        for (i=0; i < userScores.length; i++) {
+            document.createElement("li")
+            var list = document.querySelectorAll("li");
+            list[i].textContent = userScores[i];
+            scoreList.appendChild(list[i]);
+        };
+
         time = "";
-        localStorage.setItem("userScores", JSON.stringify(userScores));
+        // localStorage.setItem("userScores", JSON.stringify(userScores));
         
         // localStorage.getItem("name", JSON.stringify(players));
         // localStorage.getItem(score, JSON.stringify);
