@@ -9,7 +9,10 @@ var right = 0;
 var wrong = 0;
 var page=-1;
 var userScores = [];
-var user = [];
+if (localStorage.getItem("userScores")) {
+    userScores = JSON.parse(localStorage.getItem("userScores"));
+}
+var user = {};
 var questions = [
     {
         ask: "First Question", 
@@ -174,36 +177,43 @@ function gameOver() {
         <p>
 
         <p id=score><p>
-        <form> 
-        Your Initials: <input type="text" name="initials"> 
+        <form id="submit"> 
+        Your Initials: <input id="initials" type="text" name="initials"> 
         <br>
-        <input id=submit type="submit">
+        <input type="submit">
         </form>
         `
         // var user = [];
         // var userScores = [];
+        time = "";
+        timer.textContent = "";
         validation.textContent = "";
         gameRunning = false;
-        user.push(right);
+        user.score = right;
+        // userScores.push(user);
 
-        console.log(user);
-
-        userScores.concat(user);
         // localStorage.setItem("userScores", JSON.stringify(userScores));
 
         // localStorage.setItem("score", JSON.parse());
         var submit = document.querySelector("#submit");
+        var selector = document.querySelector("#initials")
         document.querySelector("#score").innerHTML = "You got " + right + " answers right and " + wrong + " answers wrong.";
-        submit.addEventListener("click", scoreboard);
-        // submit.addEventListener("click", function() {
-        //         userScores.initials.push(submit.value);
-        //         userScores.score.push(right);
-        //         localStorage.setItem("userScores", JSON.parse(userScores));
-        //         console.log(submit.value);
-        //         scoreboard();
-        //     }
-        // );
+        // submit.addEventListener("click", logScore);
+        submit.addEventListener("submit", function() {
+                user.initials = selector.value
+                userScores.push(user);
+                localStorage.setItem("userScores", JSON.stringify(userScores));
+                scoreboard();
+            });
+        // submit.addEventListener("submit", scoreboard);
 }
+
+// function logScore() {
+//     user.push(right);
+//     user.push(submit.value);
+//     userScores.concat(user);
+//     localStorage.setItem("userScores", JSON.stringify(userScores));
+// }
 
 function scoreboard() {
     quiz.innerHTML =`
@@ -211,16 +221,20 @@ function scoreboard() {
             Here are the scores!
         <p>
 
-        <ul id=scores><ul>
+        <ul id="scores"><ul>
         `
         var scoreList = document.querySelector("#scores");
+        userScores = userScores.sort(function(a,b) { 
+            return b.score-a.score
+            // return b.initials.localeCompare(a.initials)
+        })
+        
         for (i=0; i < userScores.length; i++) {
-            document.createElement("li")
-            var list = document.querySelectorAll("li");
-            list[i].textContent = userScores[i];
-            scoreList.appendChild(list[i]);
+            var list = document.createElement("li")
+            // var list = document.querySelectorAll("li");
+            list.textContent = userScores[i].initials + "-" + userScores[i].score;
+            scoreList.appendChild(list);
         };
-        time = "";
         // localStorage.setItem("userScores", JSON.stringify(userScores));
         
         // localStorage.getItem("name", JSON.stringify(players));
