@@ -89,7 +89,7 @@ function gameStart() {
 function startTimer() {
     var timerInterval = setInterval(function() {
       time--;
-      timer.textContent = time + "seconds left"
+      timer.textContent = time + " seconds left"
   
       if(time === 0) {
         clearInterval(timerInterval);
@@ -111,14 +111,19 @@ function homePage() {
     "Welcome to the quiz!"
     <p>
 
-    <button> Start Quiz </button>
+    <button id="start-quiz"> Start Quiz </button>
+    <button id="scoreboard"> Scoreboard </button>
     `
 
-    document.querySelector("button")
-    .addEventListener("click", questionPage);
+    document.querySelector("#start-quiz")
+    .addEventListener("click", function () {
+        questionPage();
+        gameStart();
+    }
+    );
 
-    document.querySelector("button")
-    .addEventListener("click", gameStart)
+    document.querySelector("#scoreboard")
+    .addEventListener("click", scoreboard);
 }
 
 // need to change content of homepage, not just add to it
