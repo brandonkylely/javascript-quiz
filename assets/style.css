@@ -1,0 +1,21 @@
+* {
+    background-color: bisque;
+}
+
+#welcome {
+    font-size: 40px;
+    text-align: center;
+}
+
+.home-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.home-buttons button {
+    border-radius: 5px;
+}
+
+.home-buttons button:hover {
+    box-shadow: 3px 3px 3px darkslategray;
+}

@@ -107,12 +107,13 @@ function startTimer() {
 
 function homePage() {    
     quiz.innerHTML =`
-    <p>
+    <p id="welcome">
     "Welcome to the quiz!"
     <p>
-
-    <button id="start-quiz"> Start Quiz </button>
-    <button id="scoreboard"> Scoreboard </button>
+    <div class="home-buttons">
+        <button id="start-quiz"> Start Quiz </button>
+        <button id="scoreboard"> Scoreboard </button>
+    </div>
     `
 
     document.querySelector("#start-quiz")
