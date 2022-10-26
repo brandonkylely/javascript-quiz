@@ -82,12 +82,14 @@ var questions = [
 function gameStart() {
     gameRunning = true;
     startTimer();
+    right = 0;
+    wrong = 0;
 }
 
 function startTimer() {
     var timerInterval = setInterval(function() {
       time--;
-      timer.textContent = time
+      timer.textContent = time + "seconds left"
   
       if(time === 0) {
         clearInterval(timerInterval);
@@ -143,12 +145,13 @@ function questionPage() {
             button[i].addEventListener("click", function(event) {
                 if (event.currentTarget.dataset.correct === "true") {
                     right++;
-                    console.log(right + " right " + wrong + " wrong.")
-                    validation.textContent = "Correct"
+                    // console.log(right + " right " + wrong + " wrong.")
+                    validation.textContent = "Correct!"
                 } else {
                     wrong++;
-                    console.log(right + " right " + wrong + " wrong.")
-                    validation.textContent = "Incorrect"
+                    time = time-15;
+                    // console.log(right + " right " + wrong + " wrong.")
+                    validation.textContent = "Incorrect!"
                 }
             });
             button[i].addEventListener("click", questionPage);
@@ -185,11 +188,12 @@ function gameOver() {
         `
         // var user = [];
         // var userScores = [];
-        time = "";
-        timer.textContent = "";
-        validation.textContent = "";
+        // time = "";
+        timer.textContent = "You got " + time + " points!";
+
+        // validation.textContent = "";
         gameRunning = false;
-        user.score = right;
+        user.score = time;
         // userScores.push(user);
 
         // localStorage.setItem("userScores", JSON.stringify(userScores));
@@ -232,7 +236,7 @@ function scoreboard() {
         for (i=0; i < userScores.length; i++) {
             var list = document.createElement("li")
             // var list = document.querySelectorAll("li");
-            list.textContent = userScores[i].initials + "-" + userScores[i].score;
+            list.textContent = userScores[i].initials + " - " + userScores[i].score + " points";
             scoreList.appendChild(list);
         };
         // localStorage.setItem("userScores", JSON.stringify(userScores));
